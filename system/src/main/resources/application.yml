@@ -1,0 +1,21 @@
+server:
+  port: 9001
+spring:
+  application:
+    name: system
+  datasource:
+    url: jdbc:mysql://114.215.90.83:4408/test?useUnicode=true&characterEncoding=utf-8
+    username: lhstest
+    password: Zj123LHS
+    hikari.max-lifetime: 30000
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${spring:application.name}:${server.port}
+
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:9000/eureka/
+    fetch-registry: true
+
