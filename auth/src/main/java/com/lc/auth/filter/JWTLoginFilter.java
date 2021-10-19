@@ -102,7 +102,7 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
     public String createToken(UserDetail user, String secret, long expiration) throws Exception {
         Map<String, Object> claims = new HashMap<>();
         claims.put("sub", user.getUsername());
-        claims.put("rol",user.getRoles());
+        claims.put("rol", user.getRoles());
         claims.put("per", user.getPerms());
         return JwtUtil.createToken(claims,secret, expiration);
     }

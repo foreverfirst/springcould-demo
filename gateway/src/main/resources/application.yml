@@ -36,7 +36,7 @@ spring:
 eureka:
   instance:
     prefer-ip-address: true # 是否使用 ip 地址注册
-    instance-id: ${spring.cloud.client.ip-address}:${spring:application.name}:${server.port}
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
 
   client:
     serviceUrl:

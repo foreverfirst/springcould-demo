@@ -1,6 +1,6 @@
 package com.lc.system.entity;
 
-public class RoleMenu {
+public class SysRoleMenu {
 
     private Long id;
     private Long roleId;

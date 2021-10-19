@@ -2,6 +2,7 @@ package com.lc.gateway.config;
 
 import com.lc.common.utils.JwtUtil;
 import com.netflix.discovery.EurekaClient;
+import io.jsonwebtoken.Claims;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,7 @@ import reactor.core.publisher.Mono;
 
 import java.applet.AppletContext;
 import java.util.Arrays;
+import java.util.Map;
 
 /**
  * @author denny
@@ -78,18 +80,16 @@ public class AuthFilter implements GlobalFilter, Ordered {
             }
             long start = System.currentTimeMillis();
             // 校验 token是否正确
-            JwtUtil.parseToken(token, jwtSecret);
+            Map<String, Object> claims = JwtUtil.parseToken(token, jwtSecret);
+            //有token 这里可根据具体情况，看是否需要在gateway直接把解析出来的用户信息塞进请求中，我们最终没有使用
+            request.getHeaders().set("UserDetail", claims.toString());
             log.info("parse token: {}", System.currentTimeMillis() - start);
         } catch (Exception e) {
             e.printStackTrace();
             response.setStatusCode(HttpStatus.UNAUTHORIZED);
             return response.setComplete();
         }
-//        //有token 这里可根据具体情况，看是否需要在gateway直接把解析出来的用户信息塞进请求中，我们最终没有使用
-//        UserTokenInfo userTokenInfo = UserTokenTools.getUserTokenInfo(token);
-//        log.info("token={},userTokenInfo={}",token,userTokenInfo);
-//        request.getQueryParams().add("token",token);
-        //request.getHeaders().set("token", token);
+
         return chain.filter(exchange);
     }
 

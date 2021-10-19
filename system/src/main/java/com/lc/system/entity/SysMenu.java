@@ -1,6 +1,6 @@
 package com.lc.system.entity;
 
-public class Menu {
+public class SysMenu {
 
     private Long id;
 
